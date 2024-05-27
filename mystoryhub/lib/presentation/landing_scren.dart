@@ -10,7 +10,6 @@ import 'package:mystoryhub/constants/asset_path.dart';
 import 'package:mystoryhub/constants/colors.dart';
 import 'package:mystoryhub/presentation/album_screen.dart';
 import 'package:mystoryhub/presentation/home_screen.dart';
-import 'package:mystoryhub/presentation/photos_screen.dart';
 import 'package:mystoryhub/presentation/posts_screen.dart';
 
 
@@ -29,7 +28,6 @@ class LandingScreen extends StatelessWidget {
               HomeScreen(),
               AlbumScreen(),
               PostsScreen()
-              //PhotosScreen()
             ],
           );
         },
@@ -56,13 +54,13 @@ class LandingScreen extends StatelessWidget {
                   active: state.currentIndex == 0,
                 ),
                 buildBottomNavigationBarItem(
-                  iconPath: AssetPath.homeIcon,
-                  tooltip: 'Home',
+                  iconPath: AssetPath.albumIcon,
+                  tooltip: 'Album',
                   active: state.currentIndex == 1,
                 ),
                    buildBottomNavigationBarItem(
-                  iconPath: AssetPath.homeIcon,
-                  tooltip: 'Home',
+                  iconPath: AssetPath.socialIcon,
+                  tooltip: 'Posts',
                   active: state.currentIndex == 2,
                 ),
               ],

@@ -5,5 +5,5 @@ class AppUrls{
 static const albumsUrl='$baseUrl/albums';
 static const photosUrl='$baseUrl/photos';
 static const postsUrl='$baseUrl/posts';
-static const commentsUrl='$baseUrl/posts';
+static const commentsUrl='$baseUrl/comments';
 }

@@ -1,3 +1,11 @@
-abstract class PostsEvents{}
+import 'package:mystoryhub/business_logic/model/posts.dart';
 
-class LoadPostsEvent extends PostsEvents{}
+abstract class PostEvents {}
+
+class LoadPostDataEvent extends PostEvents {}
+
+class LoadCommentsEvent extends PostEvents {
+  final List<Post> posts;
+  // final List<int> postIds;
+  LoadCommentsEvent({ required this.posts,});
+}

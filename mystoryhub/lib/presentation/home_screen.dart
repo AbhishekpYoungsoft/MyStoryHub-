@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -27,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-     TextTheme textTheme = Theme.of(context).textTheme;
+    TextTheme textTheme = Theme.of(context).textTheme;
     return BlocBuilder<HomeBloc, HomeStates>(builder: (context, state) {
       debugPrint("state : ${state.runtimeType}");
       switch (state.runtimeType) {
@@ -58,13 +57,13 @@ class _HomeScreenState extends State<HomeScreen> {
                         : null,
                   ),
                 ),
-                 SizedBox(height: 10.h),
+                SizedBox(height: 10.h),
 
                 Text(
                   user.name,
                   style: textTheme.titleMedium,
                 ),
-                 SizedBox(height: 5.h),
+                SizedBox(height: 5.h),
                 Text(
                   user.email,
                   style: textTheme.bodyMedium,
@@ -81,9 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                   child: Text(
                     "📍 ${state.location}",
-                    style: 
-                        textTheme
-                        .bodyMedium!
+                    style: textTheme.bodyMedium!
                         .copyWith(color: AppColors.secondaryColor),
                   ),
                 )
@@ -100,34 +97,6 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 }
-
-// class ProfileWidget extends StatelessWidget {
-//   final User user;
-//   const ProfileWidget({super.key, required this.user});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     TextTheme textTheme = Theme.of(context).textTheme;
-//     return Padding(
-//       padding: const EdgeInsets.all(16.0),
-//       child: Column(
-//         crossAxisAlignment: CrossAxisAlignment.center,
-//         children: [
-//           const SizedBox(height: 20),
-//           Text(
-//             user.name,
-//             style: textTheme.titleMedium,
-//           ),
-//           const SizedBox(height: 10),
-//           Text(
-//             user.email,
-//             style: textTheme.bodyMedium,
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
 
 void showImagePickerOptions(BuildContext context, User user, String location) {
   showModalBottomSheet(

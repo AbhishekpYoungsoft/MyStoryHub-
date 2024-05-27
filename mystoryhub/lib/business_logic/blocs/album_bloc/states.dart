@@ -9,6 +9,14 @@ class AlbumLoadedState extends AlbumStates{
   AlbumLoadedState({required this.albums});
 }
 
+class PhotosLoadingState extends AlbumStates{}
+
+
+// class PhotosLoadeddState extends AlbumStates{
+//   List<Album> albums;
+//   PhotosLoadeddState({required this.albums});
+// }
+
 class AlbumErrorState extends AlbumStates{
   String error;
   AlbumErrorState({required this.error});
