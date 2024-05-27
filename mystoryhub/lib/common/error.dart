@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 
+//resuable custom error widget
 class CustomErrorWidget extends StatelessWidget {
   const CustomErrorWidget({
     super.key,

@@ -27,26 +27,23 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
-    return BlocBuilder<HomeBloc, HomeStates>(builder: (context, state) {
-      debugPrint("state : ${state.runtimeType}");
-      switch (state.runtimeType) {
-        case const (HomeInitilState):
-        case const (HomeLoadingState):
-          print("loader");
+    return Scaffold(
+      body: BlocBuilder<HomeBloc, HomeStates>(builder: (context, state) {
+        if (state is HomeInitilState || state is HomeLoadingState) {
           return const LoaderWidget();
-        case const (HomeLoadedState):
-          final user = (state as HomeLoadedState).user;
+        } else if (state is HomeLoadedState) {
+          final user = state.user;
           return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                //profile photo
-
+                // Profile photo
                 InkWell(
                   onTap: () {
                     showImagePickerOptions(context, user, state.location);
                   },
+                  // Image picker and showable
                   child: CircleAvatar(
                     radius: 50.sp,
                     backgroundImage: state.imageFile != null
@@ -58,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 SizedBox(height: 10.h),
-
+                // User name and email
                 Text(
                   user.name,
                   style: textTheme.titleMedium,
@@ -68,12 +65,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   user.email,
                   style: textTheme.bodyMedium,
                 ),
-
                 SizedBox(
                   height: 10.h,
                 ),
-
-                //Location
+                // Location
                 InkWell(
                   onTap: () {
                     context.read<HomeBloc>().add(GetLocationEvent(user));
@@ -83,21 +78,22 @@ class _HomeScreenState extends State<HomeScreen> {
                     style: textTheme.bodyMedium!
                         .copyWith(color: AppColors.secondaryColor),
                   ),
-                )
+                ),
               ],
             ),
           );
-        case const (HomeErrorState):
-          return const CustomErrorWidget(errorMsg: "Error");
-        default:
-          return const Center(
-            child: Text('default'),
-          );
-      }
-    });
+        } else if (state is HomeErrorState) {
+          final String error = state.error;
+          return CustomErrorWidget(errorMsg: error);
+        } else {
+          return const CustomErrorWidget(errorMsg: 'Something went wrong.');
+        }
+      }),
+    );
   }
 }
 
+//gallary, camera options
 void showImagePickerOptions(BuildContext context, User user, String location) {
   showModalBottomSheet(
     context: context,

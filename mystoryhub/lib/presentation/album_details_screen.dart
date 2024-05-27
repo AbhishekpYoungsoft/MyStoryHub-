@@ -27,7 +27,7 @@ class AlbumDetailsScreen extends StatelessWidget {
                 width: 50.w,
                 height: 50.h,
                 fit: BoxFit.cover,
-                 errorBuilder: (context, error, stackTrace) {
+                 errorBuilder: (context, error, stackTrace) { //for handling network errors
                   return const Icon(Icons.signal_cellular_connected_no_internet_0_bar);
                 },
               ),

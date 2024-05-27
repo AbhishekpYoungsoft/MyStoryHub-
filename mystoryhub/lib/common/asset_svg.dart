@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
+
+//reusable svg asset widget
 class AssetSvgWidget extends StatelessWidget {
   const AssetSvgWidget({
     super.key, required this.iconPath, required this.height, required this.width,

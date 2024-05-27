@@ -1,5 +1,4 @@
 import 'package:mystoryhub/business_logic/model/album_details.dart';
-
 class Album {
   final int id;
   final int userId;
@@ -25,6 +24,16 @@ class Album {
     );
   }
 
+  // Method to convert an Album instance to JSON
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'userId': userId,
+      'title': title,
+      'photos': photos?.map((photo) => photo.toJson()).toList(),
+    };
+  }
+
   // Method to create a copy of the Album instance with optional new values
   Album copyWith({
     int? id,
@@ -45,4 +54,3 @@ class Album {
     return 'Album(id: $id, userId: $userId, title: $title, photos: ${photos?.length})';
   }
 }
-

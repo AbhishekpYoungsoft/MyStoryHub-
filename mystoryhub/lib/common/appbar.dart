@@ -10,7 +10,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget{
     return AppBar(
       centerTitle: true,
       automaticallyImplyLeading: false,
-      title: Text(title, style:Theme.of(context).textTheme.titleMedium!.copyWith() ,),
+      title: Text(title, style:Theme.of(context).textTheme.titleMedium),
        leading: backButton? IconButton(onPressed: ()=> Navigator.pop(context),
       icon:  const Icon(Icons.arrow_back_ios_new),
       ): null,
@@ -20,5 +20,5 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget{
   }
   
   @override
-  Size get preferredSize => const Size.fromHeight(60);
+  Size get preferredSize => const Size.fromHeight(60); //specified to 60
 }

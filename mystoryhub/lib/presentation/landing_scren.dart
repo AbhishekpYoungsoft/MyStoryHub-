@@ -52,16 +52,19 @@ class LandingScreen extends StatelessWidget {
                   iconPath: AssetPath.homeIcon,
                   tooltip: 'Profile',
                   active: state.currentIndex == 0,
+                  label:  'Profile',
                 ),
                 buildBottomNavigationBarItem(
                   iconPath: AssetPath.albumIcon,
                   tooltip: 'Album',
                   active: state.currentIndex == 1,
+                  label:  'Album',
                 ),
                    buildBottomNavigationBarItem(
                   iconPath: AssetPath.socialIcon,
                   tooltip: 'Posts',
                   active: state.currentIndex == 2,
+                  label:  'Posts',
                 ),
               ],
             );
@@ -79,6 +82,7 @@ BottomNavigationBarItem buildBottomNavigationBarItem({
   required String iconPath,
   required String tooltip,
   required bool active,
+  required String label
 }) {
   return BottomNavigationBarItem(
     icon: SizedBox(
@@ -90,7 +94,7 @@ BottomNavigationBarItem buildBottomNavigationBarItem({
         fit: BoxFit.contain,
       ),
     ),
-    label: '',
+    label: label,
     tooltip: tooltip,
   );
 }

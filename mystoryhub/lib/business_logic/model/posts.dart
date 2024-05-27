@@ -25,6 +25,16 @@ class Post {
     );
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'userId': userId,
+      'title': title,
+      'body': body,
+      'comments': comments != null ? comments!.map((comment) => comment.toJson()).toList() : null,
+    };
+  }
+
   Post copyWith({
     int? id,
     int? userId,
@@ -65,5 +75,15 @@ class Comment {
       email: json['email'],
       body: json['body'],
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'postId': postId,
+      'name': name,
+      'email': email,
+      'body': body,
+    };
   }
 }

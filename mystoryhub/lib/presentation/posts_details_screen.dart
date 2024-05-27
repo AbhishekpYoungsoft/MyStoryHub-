@@ -24,8 +24,8 @@ class PostsDetailsScreen extends StatelessWidget {
             children: [
               //post title
               Text(post.title,
-                  style:
-                      textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold)),
+                  style: textTheme.bodyLarge!
+                      .copyWith(fontWeight: FontWeight.bold)),
               SizedBox(height: 8.h),
               Text(post.body, style: textTheme.bodySmall!.copyWith()),
               SizedBox(height: 8.h),

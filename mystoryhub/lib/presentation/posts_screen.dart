@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mystoryhub/business_logic/blocs/posts_bloc/bloc.dart';
 import 'package:mystoryhub/business_logic/blocs/posts_bloc/events.dart';
 import 'package:mystoryhub/business_logic/blocs/posts_bloc/states.dart';
+import 'package:mystoryhub/common/error.dart';
 import 'package:mystoryhub/config/routes/routenames.dart';
 class PostsScreen extends StatefulWidget {
   const PostsScreen({super.key});
@@ -26,7 +27,6 @@ class _PostsScreenState extends State<PostsScreen> {
       body: BlocConsumer<PostBloc, PostStates>(
         listener: (context, state) {
           if(state is PostsLoadedState){
-            debugPrint("comments called from screen");
             context.read<PostBloc>().add(LoadCommentsEvent(posts: state.posts,));
           }
           
@@ -66,9 +66,9 @@ class _PostsScreenState extends State<PostsScreen> {
               ),
             );
           } else if (state is PostsErrorState) {
-            return Center(child: Text('Error: ${state.error}'));
+            return CustomErrorWidget(errorMsg: state.error);
           } else {
-            return const Center(child: Text('No data'));
+            return const Center(child: Text('Something went wrong'));
           }
         },
       ),

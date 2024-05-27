@@ -6,42 +6,63 @@ import 'package:mystoryhub/business_logic/model/album.dart';
 import 'package:mystoryhub/business_logic/model/album_details.dart';
 import 'package:mystoryhub/config/api/url_endpoints.dart';
 import 'package:mystoryhub/data/network/network_api_services.dart';
+import 'package:mystoryhub/utils/local_storage/storage.dart';
 
 class ALbumBloc extends Bloc<AlbumEvents, AlbumStates> {
   ALbumBloc() : super(AlbumLoadingState()) {
     on<LoadAlbumDataEvent>((event, emit) => loadAlbumDataEvent(event, emit));
-    on<LoadAlbumPhotosEvent>((event, emit) => loadAlbumPhotosEvent(event, emit));
+    on<LoadAlbumPhotosEvent>(
+        (event, emit) => loadAlbumPhotosEvent(event, emit));
   }
 
   loadAlbumDataEvent(
       LoadAlbumDataEvent event, Emitter<AlbumStates> emit) async {
     emit(AlbumLoadingState());
-    NetworkApiServices networkApiServices = NetworkApiServices();
 
     try {
-      dynamic responseData = await networkApiServices
-          .getGetApiResponse('${AppUrls.albumsUrl}?userId=1');
-      debugPrint("Response data : $responseData");
-
-      // Since responseData is a list, handle it accordingly
-      if (responseData is List && responseData.isNotEmpty) {
-        List<Album> albums =
-            responseData.map<Album>((json) => Album.fromJson(json)).toList();
+      // Initialize local storage
+      Storage storage = Storage();
+      // Check if user data exists in local storage
+      List<Album>? albums = await storage.getAlbums();
+      debugPrint(albums.toString());
+      if (albums != null) {
         emit(AlbumLoadedState(albums: albums));
       } else {
-        emit(AlbumErrorState(error: "No user data found"));
+        NetworkApiServices networkApiServices = NetworkApiServices();
+        dynamic responseData = await networkApiServices
+            .getGetApiResponse('${AppUrls.albumsUrl}?userId=1');
+        debugPrint("Response data : $responseData");
+
+        // Since responseData is a list, handle it accordingly
+        if (responseData is List && responseData.isNotEmpty) {
+          List<Album> albums =
+              responseData.map<Album>((json) => Album.fromJson(json)).toList();
+          emit(AlbumLoadedState(albums: albums));
+        } else {
+          emit(AlbumErrorState(error: "No user data found"));
+        }
       }
     } catch (error) {
       debugPrint("Error: $error");
       emit(AlbumErrorState(error: error.toString()));
     }
   }
-  
-  loadAlbumPhotosEvent(LoadAlbumPhotosEvent event, Emitter<AlbumStates> emit) async{
-     emit(PhotosLoadingState());
+
+  loadAlbumPhotosEvent(LoadAlbumPhotosEvent event, Emitter<AlbumStates> emit) async {
+    emit(PhotosLoadingState());
     NetworkApiServices networkApiServices = NetworkApiServices();
+ 
     try {
-      List<int> albumIdList = [];
+        // Initialize local storage
+      Storage storage = Storage();
+      // Check if user data exists in local storage
+      List<Album>? albums = await storage.getAlbums();
+      debugPrint(albums.toString());
+      if (albums != null) {
+        emit(AlbumLoadedState(albums: albums));
+      }else{
+        List<int> albumIdList = [];
+
 
       // Collect all post IDs
       for (var album in event.albums) {
@@ -56,15 +77,17 @@ class ALbumBloc extends Bloc<AlbumEvents, AlbumStates> {
       // Fetch comments for each post and store in the map
       for (int id in albumIdList) {
         debugPrint('${AppUrls.commentsUrl}?albumId=$id');
-        dynamic responseData = await networkApiServices.getGetApiResponse('${AppUrls.photosUrl}?albumId=$id');
+        dynamic responseData = await networkApiServices
+            .getGetApiResponse('${AppUrls.photosUrl}?albumId=$id');
         debugPrint("Response data photos for albumId $id: $responseData");
 
         if (responseData is List) {
-          List<Photo> photos = responseData.map<Photo>((json) => Photo.fromJson(json)).toList();
+          List<Photo> photos =
+              responseData.map<Photo>((json) => Photo.fromJson(json)).toList();
           debugPrint("photos: ${photos.length}");
           photosMap[id] = photos;
         } else {
-          photosMap[id]=[];
+          photosMap[id] = [];
           debugPrint("No photos data found for postId $id");
         }
       }
@@ -77,14 +100,17 @@ class ALbumBloc extends Bloc<AlbumEvents, AlbumStates> {
           return post;
         }
       }).toList();
-      
+
+      // Save the albums data to local storage
+        await storage.saveAlbums(updatedAlbums);
+
       emit(AlbumLoadedState(albums: updatedAlbums));
+      }
+
+      
     } catch (error) {
       emit(AlbumErrorState(error: error.toString()));
       debugPrint("Error fetching comments for postId : $error");
     }
-
-    
-
   }
 }

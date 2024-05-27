@@ -6,6 +6,4 @@ abstract class BaseAppServices{
 
   Future<void> pickImageFromGallery();
   Future<void> captureImage();
- 
- 
 }

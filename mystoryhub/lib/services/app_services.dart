@@ -74,6 +74,4 @@ class AppServices extends BaseAppServices {
     return imageFile;
   }
 
-
-
 }

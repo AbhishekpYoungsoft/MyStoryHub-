@@ -8,6 +8,7 @@ import 'package:mystoryhub/config/routes/app_routes.dart';
 import 'package:mystoryhub/config/routes/routenames.dart';
 import 'package:mystoryhub/config/theme/app_theme.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mystoryhub/presentation/home_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,8 +35,9 @@ class MyApp extends StatelessWidget {
             splitScreenMode: true,
             child: MaterialApp(
                 theme: CustomAppTheme.lightTheme,
-                themeMode: ThemeMode.light,
+                themeMode: ThemeMode.light, 
                 onGenerateRoute: AppRoutes.ongenerateRoute,
-                initialRoute: RouteNames.splash)));
+                initialRoute: RouteNames.splash
+                )));
   }
 }

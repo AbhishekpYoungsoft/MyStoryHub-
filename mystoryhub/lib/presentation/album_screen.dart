@@ -27,8 +27,6 @@ class _AlbumScreenState extends State<AlbumScreen> {
         if(state is AlbumLoadedState){
           context.read<ALbumBloc>().add(LoadAlbumPhotosEvent(albums: state.albums));
         }
-        
-        
       },
       listenWhen: (previous, current) => (previous is AlbumLoadingState && current is AlbumLoadedState),
       builder: (context, state){
@@ -59,6 +57,7 @@ class _AlbumScreenState extends State<AlbumScreen> {
   }
   }
 
+  //resusable album item widget
   class AlbumGridItem extends StatelessWidget {
   final Album album;
 
@@ -68,7 +67,6 @@ class _AlbumScreenState extends State<AlbumScreen> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        debugPrint(album.photos![0].thumbnailUrl.toString());
         Navigator.pushNamed(context, RouteNames.albumDetails, arguments: album);
       },
       child: Column(
